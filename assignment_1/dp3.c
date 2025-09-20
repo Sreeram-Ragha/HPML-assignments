@@ -8,13 +8,8 @@
 #include <time.h>
 #include <mkl_cblas.h>
 
-float dp(long N, float *pA, float *pB) {
-    float R = 0.0f;
-    // declaring long to prevent numbers not fitting in int
-    for (long j = 0; j < N; j++) {
-        R += pA[j] * pB[j];
-    }
-    return R;
+float bdp(long N, float *pA, float *pB) {
+    return cblas_sdot((MKL_INT)N, pA, 1, pB, 1);
 }
 
 double elapsed_seconds(struct timespec start, struct timespec end) {
@@ -31,7 +26,6 @@ int main(int argc, char *argv[]) {
     long N = atol(argv[1]);
     int repetitions = atoi(argv[2]);
 
-    // Allocate vectors
     float *A = (float *) malloc(N * sizeof(float));
     float *B = (float *) malloc(N * sizeof(float));
     if (!A || !B) {
@@ -51,7 +45,7 @@ int main(int argc, char *argv[]) {
 
     for (int r = 0; r < repetitions; r++) {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        result = dp(N, A, B);
+        result = bdp(N, A, B);
         clock_gettime(CLOCK_MONOTONIC, &end);
         times[r] = elapsed_seconds(start, end);
     }
