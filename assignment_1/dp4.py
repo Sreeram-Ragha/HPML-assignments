@@ -39,6 +39,7 @@ def main():
     flops_per_sec = flops / time_per_run
     
     print(f"N: {N} <T>: {time_per_run:.7f} sec B: {bandwidth_gb_per_sec:.3f} GB/sec F: {flops_per_sec:.3f} FLOP/sec")
+    print(f"Dot product: {R}")
 
 if __name__ == "__main__":
     main()

@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
     // Print result with nanosecond precision
     printf("N: %ld <T>: %.9f sec B: %.3f GB/sec F: %.3f FLOP/sec\n",
            N, mean_time, bandwidth, flops);
+    printf("Dot product: %.9f\n", result);
 
     free(A);
     free(B);
